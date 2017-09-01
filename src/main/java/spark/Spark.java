@@ -1007,6 +1007,13 @@ public class Spark {
                                  String truststorePassword) {
         getInstance().secure(keystoreFile, keystorePassword, truststoreFile, truststorePassword);
     }
+    
+    /**
+     * Enables http2
+     */
+    public static void http2() {
+        getInstance().http2();
+    }
 
     /**
      * Set the connection to be secure, using the specified keystore and

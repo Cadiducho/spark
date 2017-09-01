@@ -61,6 +61,7 @@ public final class Service extends Routable {
     protected boolean initialized = false;
 
     protected int port = SPARK_DEFAULT_PORT;
+    protected boolean http2Enabled = false;
     protected String ipAddress = "0.0.0.0";
 
     protected SslStores sslStores;
@@ -146,6 +147,18 @@ public final class Service extends Routable {
         return this;
     }
 
+    /**
+     * Enables HTTP2
+     * @return the object with port set
+     */
+    public synchronized Service http2() {
+        if (initialized) {
+            throwBeforeRouteMappingException();
+        }
+        this.http2Enabled = true;
+        return this;
+    }
+    
     /**
      * Retrieves the port that Spark is listening on.
      *
@@ -495,7 +508,8 @@ public final class Service extends Routable {
                             sslStores,
                             maxThreads,
                             minThreads,
-                            threadIdleTimeoutMillis);
+                            threadIdleTimeoutMillis,
+                            http2Enabled);
                   } catch (Exception e) {
                     initExceptionHandler.accept(e);
                   }
